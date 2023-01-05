@@ -6,93 +6,17 @@ import org.junit.jupiter.api.Test;
 public class RadioTest {
     @Test
     public void RealStation() {
-        Radio radio = new Radio();
+        Radio cond = new Radio(9);
 
-        radio.setStationNumber(6);
-
-        int expected = 6;
-        int actual = radio.getStationNumber();
-
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(0, cond.getMinNumberStations());
+        Assertions.assertEquals(9, cond.getMaxNumberStation());
+        Assertions.assertEquals(0, cond.getStationNumber());
 
     }
 
     @Test
-    public void RealVolume() {
-        Radio radio = new Radio();
-
-        radio.setSoundVolume(8);
-
-        int expected = 8;
-        int actual = radio.getSoundVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void ShouldNotChooseLastStationLargerMax() {
-        Radio radio = new Radio();
-
-        radio.setStationNumber(50);
-
-        int expected = 0;
-        int actual = radio.getStationNumber();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void ShouldNotChooseSoundLargerMax() {
-        Radio radio = new Radio();
-
-        radio.setSoundVolume(50);
-
-        int expected = 0;
-        int actual = radio.getSoundVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    void ShouldNotChooseLastStationLargerMini() {
-        Radio radio = new Radio();
-
-        radio.setStationNumber(-1);
-
-        int expected = 0;
-        int actual = radio.getStationNumber();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void ShouldNotChooseSoundLargerMini() {
-        Radio radio = new Radio();
-
-        radio.setSoundVolume(-1);
-
-        int expected = 0;
-        int actual = radio.getSoundVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void NextStation() {
-        Radio radio = new Radio();
-        radio.setStationNumber(5);
-
-        radio.NextStation();
-
-        int expected = 6;
-        int actual = radio.getStationNumber();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void ChooseLastToStation() {
-        Radio radio = new Radio();
+    public void LastStations() {
+        Radio radio = new Radio(9);
         radio.setStationNumber(9);
 
         radio.NextStation();
@@ -106,7 +30,7 @@ public class RadioTest {
 
     @Test
     public void ChangeStations() {
-        Radio radio = new Radio();
+        Radio radio = new Radio(8);
         radio.setStationNumber(8);
 
         radio.NextStation();
@@ -118,47 +42,8 @@ public class RadioTest {
     }
 
     @Test
-    public void NextVolume() {
-        Radio radio = new Radio();
-        radio.setSoundVolume(6);
-
-        radio.InCreaseVolume();
-
-        int expected = 7;
-        int actual = radio.getSoundVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void ChooseLastToVolume() {
-        Radio radio = new Radio();
-        radio.setSoundVolume(10);
-
-        radio.InCreaseVolume();
-
-        int expected = 10;
-        int actual = radio.getSoundVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void ChangeVolume() {
-        Radio radio = new Radio();
-        radio.setSoundVolume(9);
-
-        radio.InCreaseVolume();
-
-        int expected = 10;
-        int actual = radio.getSoundVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    @Test
-    public void FirsStation() {
-        Radio radio = new Radio();
+    public void FirstStations() {
+        Radio radio = new Radio(0);
         radio.setStationNumber(0);
 
         radio.PrevStation();
@@ -167,22 +52,57 @@ public class RadioTest {
         int actual = radio.getStationNumber();
 
         Assertions.assertEquals(expected, actual);
+
     }
 
     @Test
-    public void ChooseToStation() {
-        Radio radio = new Radio();
-        radio.setStationNumber(1);
+    public void NextStation() {
+        Radio radio = new Radio(6);
+        radio.setStationNumber(6);
 
-        radio.PrevStation();
+        radio.NextStation();
 
-        int expected = 2;
+        int expected = 7;
         int actual = radio.getStationNumber();
 
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    public void ChooseNextSoundVolume() {
+        Radio radio = new Radio(52);
+        radio.setSoundVolume(52);
+
+        radio.InCreaseVolume();
+
+        int expected = 53;
+        int actual = radio.getSoundVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void AboveMaxSoundVolume() {
+        Radio radio = new Radio(100);
+        radio.setSoundVolume(100);
+
+        radio.InCreaseVolume();
+
+        int expected = 100;
+        int actual = radio.getSoundVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void AboveMinSoundVolume() {
+        Radio radio = new Radio(-0);
+        radio.setSoundVolume(-0);
+
+
+        int expected = 0;
+        int actual = radio.getSoundVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
 }
-
-
-
